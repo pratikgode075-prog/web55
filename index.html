@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>FinSight — AI Personal Finance</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- ===== SIDEBAR (Desktop) ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#C65D3A"/>
+          <path d="M8 22L13 15L17 19L22 11L26 14" stroke="#FFFCF7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="26" cy="14" r="2" fill="#FFFCF7"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">FinSight</span>
+        <span class="brand-tagline">AI Finance</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-section="dashboard">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-section="income">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7-7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Income</span>
+      </button>
+      <button class="nav-item" data-section="expenses">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Expenses</span>
+      </button>
+      <button class="nav-item" data-section="budget">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Budget</span>
+      </button>
+      <button class="nav-item" data-section="savings">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M19 9V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M15 12h6l-3-3m0 0l-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Savings</span>
+      </button>
+      <button class="nav-item" data-section="roadmap">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6l4 6-4 6M21 6l-4 6 4 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Roadmap</span>
+      </button>
+      <button class="nav-item" data-section="investment">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M2 20h20M5 20V10l7-7 7 7v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Investments</span>
+      </button>
+      <button class="nav-item" data-section="ai">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z" stroke="currentColor" stroke-width="1.8"/><path d="M8 12h8M8 8h5M8 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>AI Assistant</span>
+      </button>
+      <button class="nav-item" data-section="reports">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="8" y1="17" x2="13" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>Reports</span>
+      </button>
+      <button class="nav-item" data-section="settings">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="demo-badge" id="demoBadge">
+        <span>Demo Data Active</span>
+        <button id="clearDemoBtn" class="clear-demo-btn">Clear</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ===== DASHBOARD ===== -->
+    <section class="page active" id="page-dashboard">
+      <header class="page-header">
+        <div>
+          <p class="greeting" id="greeting">Good morning</p>
+          <h1 class="page-title">Financial Overview</h1>
+        </div>
+        <div class="header-actions">
+          <span class="current-date" id="currentDate"></span>
+          <button class="btn-primary ai-analyze-btn" id="analyzeBtn">
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z" stroke="currentColor" stroke-width="1.8"/><path d="M8 12h8M8 8h5M8 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Analyze My Finances
+          </button>
+        </div>
+      </header>
+
+      <!-- Financial Summary Strip -->
+      <div class="summary-strip">
+        <div class="summary-card summary-income">
+          <div class="summary-label">Monthly Income</div>
+          <div class="summary-value" id="dash-income">₹0</div>
+          <div class="summary-sub" id="dash-income-count">0 entries</div>
+        </div>
+        <div class="summary-card summary-expense">
+          <div class="summary-label">Monthly Expenses</div>
+          <div class="summary-value" id="dash-expense">₹0</div>
+          <div class="summary-sub" id="dash-expense-count">0 entries</div>
+        </div>
+        <div class="summary-card summary-savings">
+          <div class="summary-label">Net Savings</div>
+          <div class="summary-value" id="dash-savings">₹0</div>
+          <div class="summary-sub" id="dash-savings-rate">0% savings rate</div>
+        </div>
+        <div class="summary-card summary-budget">
+          <div class="summary-label">Budget Remaining</div>
+          <div class="summary-value" id="dash-budget-rem">₹0</div>
+          <div class="summary-sub" id="dash-budget-pct">0% used</div>
+        </div>
+      </div>
+
+      <!-- Charts + Activity Row -->
+      <div class="dashboard-grid">
+        <div class="card chart-card">
+          <div class="card-header">
+            <h3>Income vs Expenses</h3>
+            <span class="card-sub">Last 6 months</span>
+          </div>
+          <div class="chart-wrap"><canvas id="incomeExpenseChart"></canvas></div>
+        </div>
+        <div class="card chart-card">
+          <div class="card-header">
+            <h3>Spending by Category</h3>
+            <span class="card-sub">This month</span>
+          </div>
+          <div class="chart-wrap chart-wrap-doughnut"><canvas id="categoryChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Financial Health + Recent Transactions -->
+      <div class="dashboard-grid dashboard-grid-3">
+        <div class="card health-card">
+          <div class="card-header"><h3>Financial Health</h3></div>
+          <div class="health-score-wrap">
+            <div class="health-ring" id="healthRing">
+              <svg viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#DED5C9" stroke-width="10"/>
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#66856B" stroke-width="10"
+                  stroke-dasharray="314" stroke-dashoffset="314"
+                  id="healthCircle" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              </svg>
+              <div class="health-score-label">
+                <span id="healthScore">--</span>
+                <small>/100</small>
+              </div>
+            </div>
+          </div>
+          <p class="health-status" id="healthStatus">Add income & expenses to see your health score.</p>
+          <div class="health-tips" id="healthTips"></div>
+        </div>
+        <div class="card recent-card col-span-2">
+          <div class="card-header">
+            <h3>Recent Transactions</h3>
+            <button class="link-btn" data-section="expenses">View All</button>
+          </div>
+          <div class="transaction-list" id="recentTransactions">
+            <div class="empty-state">
+              <svg viewBox="0 0 64 64" fill="none" width="48" height="48"><rect x="8" y="12" width="48" height="40" rx="4" stroke="#DED5C9" stroke-width="2"/><path d="M8 22h48" stroke="#DED5C9" stroke-width="2"/><path d="M20 32h24M20 40h16" stroke="#DED5C9" stroke-width="2" stroke-linecap="round"/></svg>
+              <p>No transactions yet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Savings Goals Progress -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Savings Goals</h3>
+          <button class="link-btn" data-section="savings">Manage Goals</button>
+        </div>
+        <div class="goals-preview" id="goalsPreview">
+          <div class="empty-state">
+            <p>No savings goals yet</p>
+            <button class="btn-secondary" data-section="savings">Create a Goal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h3 class="section-label">Quick Actions</h3>
+        <div class="quick-actions-grid">
+          <button class="quick-action-btn" data-action="addIncome">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M12 5v14M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add Income
+          </button>
+          <button class="quick-action-btn" data-action="addExpense">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M12 19V5M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add Expense
+          </button>
+          <button class="quick-action-btn" data-action="setBudget">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Set Budget
+          </button>
+          <button class="quick-action-btn" data-action="addGoal">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            New Goal
+          </button>
+          <button class="quick-action-btn" data-action="aiChat">
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z" stroke="currentColor" stroke-width="2"/><path d="M8 12h8M8 8h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Ask AI
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INCOME ===== -->
+    <section class="page" id="page-income">
+      <header class="page-header">
+        <div>
+          <p class="page-breadcrumb">Finance</p>
+          <h1 class="page-title">Income</h1>
+        </div>
+        <button class="btn-primary" id="addIncomeBtn">+ Add Income</button>
+      </header>
+      <div class="income-summary-row">
+        <div class="stat-pill">
+          <span class="stat-label">Total This Month</span>
+          <span class="stat-value accent-green" id="income-total-month">₹0</span>
+        </div>
+        <div class="month-selector-wrap">
+          <input type="month" id="incomeMonth" class="month-input" />
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="card chart-card">
+          <div class="card-header"><h3>Income Sources</h3></div>
+          <div class="chart-wrap chart-wrap-doughnut"><canvas id="incomeSourceChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Source Breakdown</h3></div>
+          <div id="incomeBreakdown" class="breakdown-list"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Income History</h3></div>
+        <div class="transaction-list" id="incomeList"></div>
+      </div>
+    </section>
+
+    <!-- ===== EXPENSES ===== -->
+    <section class="page" id="page-expenses">
+      <header class="page-header">
+        <div>
+          <p class="page-breadcrumb">Finance</p>
+          <h1 class="page-title">Expenses</h1>
+        </div>
+        <button class="btn-primary" id="addExpenseBtn">+ Add Expense</button>
+      </header>
+      <div class="income-summary-row">
+        <div class="stat-pill">
+          <span class="stat-label">Total This Month</span>
+          <span class="stat-value accent-red" id="expense-total-month">₹0</span>
+        </div>
+        <div class="filter-row">
+          <select id="expenseFilterCat" class="select-input">
+            <option value="">All Categories</option>
+            <option>Food</option><option>Travel</option><option>Rent</option>
+            <option>Education</option><option>Shopping</option><option>Bills</option>
+            <option>Health</option><option>Entertainment</option><option>Other</option>
+          </select>
+          <input type="month" id="expenseMonth" class="month-input" />
+        </div>
+      </div>
+      <div class="search-bar-wrap">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input type="text" id="expenseSearch" class="search-input" placeholder="Search transactions..." />
+      </div>
+      <div class="dashboard-grid">
+        <div class="card chart-card">
+          <div class="card-header"><h3>Spending by Category</h3></div>
+          <div class="chart-wrap chart-wrap-doughnut"><canvas id="expenseCategoryChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Category Breakdown</h3></div>
+          <div id="expenseBreakdown" class="breakdown-list"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Expense History</h3></div>
+        <div class="transaction-list" id="expenseList"></div>
+      </div>
+    </section>
+
+    <!-- ===== BUDGET ===== -->
+    <section class="page" id="page-budget">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">Finance</p><h1 class="page-title">Budget Planner</h1></div>
+        <input type="month" id="budgetMonth" class="month-input" />
+      </header>
+      <div class="budget-overview-row">
+        <div class="card budget-main-card">
+          <h3>Monthly Budget</h3>
+          <div class="budget-form-inline">
+            <div class="form-group-inline">
+              <label for="totalBudgetInput">Total Budget (₹)</label>
+              <input type="number" id="totalBudgetInput" class="inset-input" placeholder="e.g. 50000" min="0" />
+            </div>
+            <button class="btn-primary" id="saveBudgetBtn">Save</button>
+          </div>
+          <div class="budget-meter">
+            <div class="budget-meter-labels">
+              <span>Spent: <strong id="budget-spent">₹0</strong></span>
+              <span>Remaining: <strong id="budget-remaining">₹0</strong></span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="budgetProgressBar"></div>
+            </div>
+            <div class="budget-meter-pct" id="budgetPct">0% used</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Budgets -->
+      <div class="card">
+        <div class="card-header"><h3>Category Budgets</h3><button class="btn-secondary" id="addCatBudgetBtn">+ Add</button></div>
+        <div id="categoryBudgetList" class="category-budget-list"></div>
+      </div>
+    </section>
+
+    <!-- ===== SAVINGS ===== -->
+    <section class="page" id="page-savings">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">Finance</p><h1 class="page-title">Savings Goals</h1></div>
+        <button class="btn-primary" id="addGoalBtn">+ New Goal</button>
+      </header>
+      <div class="goals-grid" id="goalsGrid">
+        <div class="empty-state full-width">
+          <svg viewBox="0 0 64 64" fill="none" width="56" height="56"><path d="M32 8l6 12 13 2-9.5 9.3L44 45l-12-6.3L20 45l2.5-13.7L13 22l13-2z" stroke="#DED5C9" stroke-width="2" stroke-linejoin="round"/></svg>
+          <p>No savings goals yet</p>
+          <button class="btn-primary" id="addGoalEmptyBtn">Create your first goal</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ROADMAP ===== -->
+    <section class="page" id="page-roadmap">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">Planning</p><h1 class="page-title">Financial Roadmap</h1></div>
+      </header>
+      <div class="roadmap-layout">
+        <div class="card roadmap-form-card">
+          <h3>Your Roadmap Inputs</h3>
+          <div class="form-group">
+            <label for="rm-income">Monthly Income (₹)</label>
+            <input type="number" id="rm-income" class="inset-input" placeholder="e.g. 50000" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="rm-expenses">Monthly Expenses (₹)</label>
+            <input type="number" id="rm-expenses" class="inset-input" placeholder="e.g. 35000" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="rm-savings">Existing Savings (₹)</label>
+            <input type="number" id="rm-savings" class="inset-input" placeholder="e.g. 10000" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="rm-debt">Monthly Debt Payments (₹)</label>
+            <input type="number" id="rm-debt" class="inset-input" placeholder="e.g. 5000" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="rm-goal">Financial Goal</label>
+            <input type="text" id="rm-goal" class="inset-input" placeholder="e.g. Buy a Laptop" />
+          </div>
+          <div class="form-group">
+            <label for="rm-target">Target Amount (₹)</label>
+            <input type="number" id="rm-target" class="inset-input" placeholder="e.g. 80000" min="0"/>
+          </div>
+          <div class="form-group">
+            <label for="rm-date">Target Date</label>
+            <input type="month" id="rm-date" class="inset-input" />
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" id="generateRoadmapBtn">Generate Roadmap</button>
+            <button class="btn-secondary" id="aiRoadmapBtn">Explain with AI</button>
+          </div>
+        </div>
+        <div class="card roadmap-result-card" id="roadmapResult">
+          <div class="empty-state">
+            <svg viewBox="0 0 64 64" fill="none" width="48" height="48"><path d="M8 32h48M8 20l16 12L40 20l16 12" stroke="#DED5C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <p>Fill in the form to generate your roadmap</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INVESTMENT ===== -->
+    <section class="page" id="page-investment">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">Planning</p><h1 class="page-title">Investment Calculator</h1></div>
+      </header>
+      <div class="investment-layout">
+        <div class="card">
+          <h3>SIP Calculator</h3>
+          <p class="disclaimer-note">Results are estimates only. Market-linked returns are not guaranteed.</p>
+          <div class="form-group">
+            <label for="sip-amount">Monthly Investment (₹)</label>
+            <input type="number" id="sip-amount" class="inset-input" placeholder="e.g. 5000" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="sip-return">Expected Annual Return (%)</label>
+            <input type="number" id="sip-return" class="inset-input" placeholder="e.g. 12" min="0" max="100" />
+          </div>
+          <div class="form-group">
+            <label for="sip-years">Duration (Years)</label>
+            <input type="number" id="sip-years" class="inset-input" placeholder="e.g. 10" min="1" max="40" />
+          </div>
+          <button class="btn-primary" id="calcSipBtn">Calculate</button>
+          <div class="sip-result" id="sipResult" style="display:none">
+            <div class="sip-result-row">
+              <span>Amount Invested</span><strong id="sip-invested"></strong>
+            </div>
+            <div class="sip-result-row">
+              <span>Estimated Returns</span><strong id="sip-returns" class="accent-green"></strong>
+            </div>
+            <div class="sip-result-row sip-total">
+              <span>Future Value</span><strong id="sip-total"></strong>
+            </div>
+          </div>
+          <div class="chart-wrap" id="sipChartWrap" style="display:none">
+            <canvas id="sipChart"></canvas>
+          </div>
+        </div>
+        <div class="investment-edu-col">
+          <div class="card">
+            <h3>Investment Options</h3>
+            <div class="edu-tabs">
+              <button class="edu-tab active" data-tab="sip-info">SIP/MF</button>
+              <button class="edu-tab" data-tab="fd-info">FD/RD</button>
+              <button class="edu-tab" data-tab="ppf-info">PPF</button>
+              <button class="edu-tab" data-tab="gold-info">Gold</button>
+            </div>
+            <div class="edu-content">
+              <div class="edu-panel active" id="sip-info">
+                <h4>Systematic Investment Plan (SIP)</h4>
+                <p>SIP lets you invest a fixed amount regularly in mutual funds. It benefits from rupee cost averaging — you buy more units when prices are low.</p>
+                <ul><li>Suitable for long-term wealth creation</li><li>Market-linked returns (not guaranteed)</li><li>High liquidity in most equity funds</li><li>Minimum ₹500/month typically</li></ul>
+                <p class="disclaimer-note">Past performance does not guarantee future returns.</p>
+              </div>
+              <div class="edu-panel" id="fd-info">
+                <h4>Fixed & Recurring Deposits</h4>
+                <p>Bank FDs offer guaranteed returns at a fixed interest rate. RDs allow monthly deposits like SIP but at fixed bank rates.</p>
+                <ul><li>Capital protection (up to DICGC limits)</li><li>Fixed, predictable returns</li><li>Premature withdrawal penalties</li><li>Returns are taxable as per income slab</li></ul>
+              </div>
+              <div class="edu-panel" id="ppf-info">
+                <h4>Public Provident Fund (PPF)</h4>
+                <p>Government-backed long-term savings scheme with 15-year lock-in. One of the best tax-saving instruments in India.</p>
+                <ul><li>Tax-free returns (EEE status)</li><li>Government-backed, very safe</li><li>15-year lock-in (partial withdrawal allowed after 7 years)</li><li>Max ₹1.5L per year investment</li></ul>
+              </div>
+              <div class="edu-panel" id="gold-info">
+                <h4>Gold Investment</h4>
+                <p>Gold acts as an inflation hedge and safe haven. Options include physical gold, Sovereign Gold Bonds (SGB), and Gold ETFs.</p>
+                <ul><li>SGBs earn 2.5% annual interest</li><li>Gold ETFs traded like stocks</li><li>Physical gold has storage risks</li><li>Long-term hedge against inflation</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AI ASSISTANT ===== -->
+    <section class="page" id="page-ai">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">AI</p><h1 class="page-title">AI Financial Assistant</h1></div>
+      </header>
+      <div class="ai-key-notice" id="aiKeyNotice">
+        <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>No API key configured. Go to <strong>Settings</strong> to enter your Gemini API key. The rest of the app works without it.</span>
+      </div>
+      <div class="chat-layout">
+        <div class="chat-container card" id="chatContainer">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-welcome">
+              <div class="ai-avatar">
+                <svg viewBox="0 0 32 32" fill="none" width="32" height="32"><rect width="32" height="32" rx="16" fill="#C65D3A"/><path d="M10 16h12M10 11h7M10 21h9" stroke="#FFFCF7" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <p class="chat-welcome-title">Hi, I'm your FinSight AI</p>
+                <p class="chat-welcome-sub">I can help you understand your finances, create budgets, plan savings, and explore investments. Ask me anything!</p>
+              </div>
+            </div>
+          </div>
+          <div class="suggested-questions" id="suggestedQuestions">
+            <button class="sq-btn">How can I manage my monthly income?</button>
+            <button class="sq-btn">How can I save ₹50,000 in 6 months?</button>
+            <button class="sq-btn">Analyze my spending habits.</button>
+            <button class="sq-btn">Create a monthly budget for me.</button>
+            <button class="sq-btn">Explain SIP, FD, RD, and PPF.</button>
+            <button class="sq-btn">Help me create an emergency fund.</button>
+            <button class="sq-btn">Create a 1-year financial roadmap.</button>
+          </div>
+          <div class="chat-input-bar">
+            <textarea id="chatInput" class="chat-textarea" placeholder="Ask your AI financial assistant..." rows="1"></textarea>
+            <button class="chat-send-btn" id="chatSendBtn" aria-label="Send message">
+              <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REPORTS ===== -->
+    <section class="page" id="page-reports">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">Analytics</p><h1 class="page-title">Monthly Reports</h1></div>
+        <div class="header-actions">
+          <input type="month" id="reportMonth" class="month-input" />
+          <button class="btn-primary" onclick="window.print()">
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="6" y="14" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>
+            Print / PDF
+          </button>
+        </div>
+      </header>
+      <div id="reportContent">
+        <div class="report-summary-row">
+          <div class="report-stat"><span class="report-stat-label">Total Income</span><span class="report-stat-val accent-green" id="rep-income">₹0</span></div>
+          <div class="report-stat"><span class="report-stat-label">Total Expenses</span><span class="report-stat-val accent-red" id="rep-expense">₹0</span></div>
+          <div class="report-stat"><span class="report-stat-label">Net Savings</span><span class="report-stat-val" id="rep-savings">₹0</span></div>
+          <div class="report-stat"><span class="report-stat-label">Budget Used</span><span class="report-stat-val" id="rep-budget-pct">--</span></div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card chart-card">
+            <div class="card-header"><h3>Income vs Expenses</h3></div>
+            <div class="chart-wrap"><canvas id="reportChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Expense Breakdown</h3></div>
+            <div id="reportBreakdown" class="breakdown-list"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Savings Goals Progress</h3></div>
+          <div id="reportGoals"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section class="page" id="page-settings">
+      <header class="page-header">
+        <div><p class="page-breadcrumb">Configuration</p><h1 class="page-title">Settings</h1></div>
+      </header>
+      <div class="settings-layout">
+        <div class="card">
+          <h3>AI Configuration</h3>
+          <p class="settings-desc">Enter your Google Gemini API key to enable AI features. The key is stored only in your browser's localStorage. <strong>Never share your API key publicly.</strong></p>
+          <div class="form-group">
+            <label for="apiKeyInput">Gemini API Key</label>
+            <div class="api-key-row">
+              <input type="password" id="apiKeyInput" class="inset-input" placeholder="AIza..." autocomplete="off" />
+              <button class="btn-secondary" id="toggleApiKey">Show</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="modelSelect">Gemini Model</label>
+            <select id="modelSelect" class="select-input">
+              <option value="gemini-1.5-flash">gemini-1.5-flash (Recommended)</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+              <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+            </select>
+          </div>
+          <button class="btn-primary" id="saveApiKeyBtn">Save API Key</button>
+          <div class="api-status" id="apiStatus"></div>
+          <div class="security-note">
+            <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8"/></svg>
+            <p>This is a college demo project. The API key is stored in your local browser only and is not sent to any external server other than Google's Gemini API. Do not use this architecture for public production deployments.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Data Management</h3>
+          <p class="settings-desc">All financial data is stored in your browser's localStorage. It persists across page refreshes but is specific to this browser.</p>
+          <div class="settings-actions">
+            <button class="btn-secondary" id="loadDemoDataBtn">Load Demo Data</button>
+            <button class="btn-danger" id="clearAllDataBtn">Clear All Data</button>
+          </div>
+          <div class="storage-note">
+            <strong>Storage used:</strong> <span id="storageUsed">Calculating...</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>About FinSight</h3>
+          <p class="settings-desc">AI Personal Finance Management System — College Project</p>
+          <ul class="about-list">
+            <li>Built with HTML5, CSS3, Vanilla JavaScript</li>
+            <li>AI powered by Google Gemini API</li>
+            <li>Charts by Chart.js</li>
+            <li>Data stored in Browser localStorage</li>
+            <li>No backend server or database</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== MOBILE BOTTOM NAV ===== -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="bottom-nav-item active" data-section="dashboard">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="bottom-nav-item" data-section="expenses">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Expenses</span>
+    </button>
+    <button class="bottom-nav-item" data-section="budget">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Budget</span>
+    </button>
+    <button class="bottom-nav-item" data-section="ai">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z" stroke="currentColor" stroke-width="1.8"/><path d="M8 12h8M8 8h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>AI</span>
+    </button>
+    <button class="bottom-nav-item" data-section="settings">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span>More</span>
+    </button>
+  </nav>
+
+  <!-- ===== MODALS ===== -->
+  <!-- Income Modal -->
+  <div class="modal-overlay" id="incomeModal" role="dialog" aria-modal="true" aria-labelledby="incomeModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="incomeModalTitle">Add Income</h3>
+        <button class="modal-close" data-modal="incomeModal" aria-label="Close">&times;</button>
+      </div>
+      <form id="incomeForm" novalidate>
+        <input type="hidden" id="incomeEditId" />
+        <div class="form-group">
+          <label for="incomeSource">Source</label>
+          <select id="incomeSource" class="select-input" required>
+            <option value="">Select source...</option>
+            <option>Salary</option><option>Freelancing</option><option>Business</option>
+            <option>Scholarship</option><option>Allowance</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="incomeAmount">Amount (₹)</label>
+          <input type="number" id="incomeAmount" class="inset-input" placeholder="Enter amount" min="0.01" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label for="incomeDate">Date</label>
+          <input type="date" id="incomeDate" class="inset-input" required />
+        </div>
+        <div class="form-group">
+          <label for="incomeDesc">Description (optional)</label>
+          <input type="text" id="incomeDesc" class="inset-input" placeholder="Optional note" maxlength="100" />
+        </div>
+        <div class="form-error" id="incomeFormError"></div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary modal-close-btn" data-modal="incomeModal">Cancel</button>
+          <button type="submit" class="btn-primary">Save Income</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Expense Modal -->
+  <div class="modal-overlay" id="expenseModal" role="dialog" aria-modal="true" aria-labelledby="expenseModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="expenseModalTitle">Add Expense</h3>
+        <button class="modal-close" data-modal="expenseModal" aria-label="Close">&times;</button>
+      </div>
+      <form id="expenseForm" novalidate>
+        <input type="hidden" id="expenseEditId" />
+        <div class="form-group">
+          <label for="expenseCategory">Category</label>
+          <select id="expenseCategory" class="select-input" required>
+            <option value="">Select category...</option>
+            <option>Food</option><option>Travel</option><option>Rent</option>
+            <option>Education</option><option>Shopping</option><option>Bills</option>
+            <option>Health</option><option>Entertainment</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="expenseAmount">Amount (₹)</label>
+          <input type="number" id="expenseAmount" class="inset-input" placeholder="Enter amount" min="0.01" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label for="expenseDate">Date</label>
+          <input type="date" id="expenseDate" class="inset-input" required />
+        </div>
+        <div class="form-group">
+          <label for="expenseDesc">Description</label>
+          <input type="text" id="expenseDesc" class="inset-input" placeholder="What was this for?" maxlength="100" required />
+        </div>
+        <div class="form-error" id="expenseFormError"></div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary modal-close-btn" data-modal="expenseModal">Cancel</button>
+          <button type="submit" class="btn-primary">Save Expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Savings Goal Modal -->
+  <div class="modal-overlay" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="goalModalTitle">New Savings Goal</h3>
+        <button class="modal-close" data-modal="goalModal" aria-label="Close">&times;</button>
+      </div>
+      <form id="goalForm" novalidate>
+        <input type="hidden" id="goalEditId" />
+        <div class="form-group">
+          <label for="goalName">Goal Name</label>
+          <input type="text" id="goalName" class="inset-input" placeholder="e.g. Buy a Laptop" required maxlength="60" />
+        </div>
+        <div class="form-group">
+          <label for="goalTarget">Target Amount (₹)</label>
+          <input type="number" id="goalTarget" class="inset-input" placeholder="e.g. 60000" min="1" required />
+        </div>
+        <div class="form-group">
+          <label for="goalSaved">Amount Already Saved (₹)</label>
+          <input type="number" id="goalSaved" class="inset-input" placeholder="e.g. 10000" min="0" value="0" />
+        </div>
+        <div class="form-group">
+          <label for="goalDate">Target Date</label>
+          <input type="month" id="goalDate" class="inset-input" required />
+        </div>
+        <div class="form-error" id="goalFormError"></div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary modal-close-btn" data-modal="goalModal">Cancel</button>
+          <button type="submit" class="btn-primary">Save Goal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Category Budget Modal -->
+  <div class="modal-overlay" id="catBudgetModal" role="dialog" aria-modal="true" aria-labelledby="catBudgetModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="catBudgetModalTitle">Category Budget</h3>
+        <button class="modal-close" data-modal="catBudgetModal" aria-label="Close">&times;</button>
+      </div>
+      <form id="catBudgetForm" novalidate>
+        <input type="hidden" id="catBudgetEditKey" />
+        <div class="form-group">
+          <label for="catBudgetCat">Category</label>
+          <select id="catBudgetCat" class="select-input" required>
+            <option value="">Select category...</option>
+            <option>Food</option><option>Travel</option><option>Rent</option>
+            <option>Education</option><option>Shopping</option><option>Bills</option>
+            <option>Health</option><option>Entertainment</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="catBudgetAmt">Budget Amount (₹)</label>
+          <input type="number" id="catBudgetAmt" class="inset-input" placeholder="e.g. 5000" min="1" required />
+        </div>
+        <div class="form-error" id="catBudgetFormError"></div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary modal-close-btn" data-modal="catBudgetModal">Cancel</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="confirmTitle">Confirm</h3>
+        <button class="modal-close" data-modal="confirmModal" aria-label="Close">&times;</button>
+      </div>
+      <p id="confirmMessage" class="confirm-message"></p>
+      <div class="form-actions">
+        <button class="btn-secondary" id="confirmCancelBtn">Cancel</button>
+        <button class="btn-danger" id="confirmOkBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Analysis Modal -->
+  <div class="modal-overlay" id="analysisModal" role="dialog" aria-modal="true" aria-labelledby="analysisTitle">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="analysisTitle">AI Financial Analysis</h3>
+        <button class="modal-close" data-modal="analysisModal" aria-label="Close">&times;</button>
+      </div>
+      <div id="analysisContent" class="analysis-content">
+        <div class="ai-loading"><div class="loading-dots"><span></span><span></span><span></span></div><p>Analyzing your finances...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
